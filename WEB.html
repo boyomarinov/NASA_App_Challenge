@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Moonville</title>
+		<script type='text/javascript' src='jquery.min.js'></script>
+        <link href="style.css" rel="stylesheet" />
+		<script type="text/javascript">
+		<!--
+		var unityObjectUrl = "UnityObject2.js";
+		if (document.location.protocol == 'https:')
+			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+		-->
+		</script>
+		<script type="text/javascript">
+		<!--
+			var config = {
+				width: 960, 
+				height: 600,
+				params: { enableDebugging:"0" }
+				
+			};
+			var u = new UnityObject2(config);
+			
+			jQuery(function() {
+
+				var $missingScreen = jQuery("#unityPlayer").find(".missing");
+				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+				$missingScreen.hide();
+				$brokenScreen.hide();
+
+				u.observeProgress(function (progress) {
+					switch(progress.pluginStatus) {
+						case "broken":
+							$brokenScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$brokenScreen.show();
+						break;
+						case "missing":
+							$missingScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$missingScreen.show();
+						break;
+						case "installed":
+							$missingScreen.remove();
+						break;
+						case "first":
+						break;
+					}
+				});
+				u.initPlugin(jQuery("#unityPlayer")[0], "WEB.unity3d");
+			});
+		-->
+		</script>
+		<style type="text/css">
+		<!--
+		
+		div.content {
+            position: absolute;
+            top: 53px;
+            left: 3px;
+			width: 960px;
+		}
+		/*div.broken,
+		div.missing {
+			margin: 0;
+			position: relative;
+			top: 50%;
+			width: 193px;
+		}
+		div.broken a,
+		div.missing a {
+			height: 63px;
+			position: relative;
+			top: -31px;
+		}
+		div.broken img,
+		div.missing img {
+			border-width: 0px;
+		}
+		div.broken {
+			display: none;
+		}*/
+		div#unityPlayer {
+			cursor: default;
+			height: 600px;
+			width: 960px;
+		}
+		-->
+		</style>
+	</head>
+	<body>
+
+
+        <!--<img src="game.png" id="gametest"/>-->
+
+        <div id="resolution-error">
+            <h1>Moonville</h1>
+            <p>You're using too small resolution. The game requires 1024x768 or higher</p>
+        </div>
+               
+        <div id="greeting">  
+		    <h1>Moonville</h1>
+
+            <span href="#" id="playGameBtn">Play the game</span>
+        </div>
+
+        <br><br>
+
+        <div class="content">
+
+			<div id="unityPlayer">
+				<div class="missing">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+					</a>
+				</div>
+			</div>
+		</div>
+		
+        <nav>
+            <ul>
+                <li><a href="nasa.html">Nasa space challenge</a></li>
+                <li><a href="about-us.html">About us</a></li>
+                <li><a href="documentation.html">Documentation</a></li>
+            </ul>
+
+            </nav>
+
+        <script>
+
+            $("#playGameBtn").on("click", onPlayGameBtnClick);
+
+            function onPlayGameBtnClick() {
+                $("#greeting").hide();
+                $("#unityPlayer").show();
+            }
+         </script>
+
+	</body>
+</html>
